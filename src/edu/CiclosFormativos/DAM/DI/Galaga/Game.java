@@ -27,8 +27,9 @@ public class Game {
     // Variables miembro
     private RenderWindow _window = null;                    // ventana principal
 	
-    private CircleShape _player = null;                    // jugador (un simple círculo cyan)
+    private CircleShape _player = null;                     // jugador (un simple círculo cyan)
     private Boolean _IsMovingUp = false, _IsMovingDown = false, _IsMovingLeft = false, _IsMovingRight = false;
+    private float _playerSpeed;                             // velocidad del jugad
     
     // Constructor
     public Game() {
@@ -44,6 +45,8 @@ public class Game {
         _player.setRadius(40f);
         _player.setPosition(new Vector2f(100f, 100f));
         _player.setFillColor(Color.CYAN);
+        
+        _playerSpeed = 25;           // 25 px/s
     }
     
     ////////////////////////
@@ -51,13 +54,20 @@ public class Game {
     ////////////////////////
     public void run() {
 
+        org.jsfml.system.Clock clock = new org.jsfml.system.Clock();
+        org.jsfml.system.Time deltaTime;
+        
         // Game Loop
         while (_window.isOpen())
         {
+            // para cada uno de los ciclos reinicio el reloj a cero y devuelvo
+           // el tiempo que ha pasado desde el inicio
+           deltaTime = clock.restart();
+
             // Procesamos eventos
             dispacthEvent();
-
-            update();
+            
+            update(deltaTime);
             render();
         }
     }
@@ -82,22 +92,24 @@ public class Game {
     }
     
     // actualiza el estado del mundo
-    private void update() {
+    private void update(org.jsfml.system.Time time) {
         
         float xPos = _player.getPosition().x;
         float yPos = _player.getPosition().y;
         
-        // desplaza 1 px en el sentido que haya inidcado la pulsacion del teclado
-        if (_IsMovingUp)
-            yPos -= 1f;
-        if (_IsMovingDown)
-            yPos += 1f;
-        if (_IsMovingLeft)
-            xPos -= 1f;
-        if (_IsMovingRight)
-            xPos += 1f;
-    
+        float dist = _playerSpeed * time.asSeconds();
         
+        if (_IsMovingUp)
+            yPos -= dist;
+        if (_IsMovingDown)
+            yPos += dist;
+        if (_IsMovingLeft)
+            xPos -= dist;
+        if (_IsMovingRight)
+            xPos += dist;
+   
+        // espacio = velocidad * tiempo. El nuevo espacio se añade a la posición previa
+        // del tiempo se obtienen los segundos ya que la velocidad se dam en px/s
         _player.setPosition(xPos, yPos);
     }
 		
