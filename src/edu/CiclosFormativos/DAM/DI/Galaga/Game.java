@@ -31,6 +31,8 @@ public class Game {
     private Boolean _IsMovingUp = false, _IsMovingDown = false, _IsMovingLeft = false, _IsMovingRight = false;
     private float _playerSpeed;                             // velocidad del jugad
     
+    private org.jsfml.system.Time _timePerFrame;
+     
     // Constructor
     public Game() {
 
@@ -46,7 +48,9 @@ public class Game {
         _player.setPosition(new Vector2f(100f, 100f));
         _player.setFillColor(Color.CYAN);
         
-        _playerSpeed = 25;           // 25 px/s
+        _playerSpeed = 100;           // 25 px/s
+        
+        _timePerFrame = org.jsfml.system.Time.getSeconds(1f / 60f);           // 60 frames por segundo
     }
     
     ////////////////////////
@@ -55,19 +59,35 @@ public class Game {
     public void run() {
 
         org.jsfml.system.Clock clock = new org.jsfml.system.Clock();
-        org.jsfml.system.Time deltaTime;
+        org.jsfml.system.Time timeSinceLastUpdate = org.jsfml.system.Time.ZERO;
         
         // Game Loop
         while (_window.isOpen())
         {
-            // para cada uno de los ciclos reinicio el reloj a cero y devuelvo
-           // el tiempo que ha pasado desde el inicio
-           deltaTime = clock.restart();
-
-            // Procesamos eventos
+            // Procesamos eventos. Este procesamiento de evento se podría quitar ya que sólo
+            // tendría importancia para aquellos eventos que no afectasen al mundo
+            // en este caso el Close. Si lo quitaramos sólo se retrasaría un poco (hasta el paso del tiempo
+            // del frame) al ejecución del evento 
             dispacthEvent();
             
-            update(deltaTime);
+            // para cada uno de los ciclos reinicio el reloj a cero y devuelvo
+            // el tiempo que ha transcurrido
+            timeSinceLastUpdate = org.jsfml.system.Time.add(timeSinceLastUpdate, clock.restart());
+            
+            // si el tiempo transcurrido es mayor que el que queremos por cada frame
+            while (timeSinceLastUpdate.compareTo(_timePerFrame) > 0)
+            {
+                timeSinceLastUpdate = org.jsfml.system.Time.sub(timeSinceLastUpdate, _timePerFrame);
+               
+                // Procesamos eventos
+                dispacthEvent();
+
+                update(_timePerFrame);                  // actualizo el mundo
+
+                // si después de este ciclo el tiempo que ha trancurrido sigue siendo mayor al de un frame
+                // repito el ciclo
+            }
+            
             render();
         }
     }
