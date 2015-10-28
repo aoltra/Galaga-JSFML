@@ -50,7 +50,7 @@ public class Game {
         
         _playerSpeed = 100;           // 25 px/s
         
-        _timePerFrame = org.jsfml.system.Time.getSeconds(1f / 60f);           // 60 frames por segundo
+        _timePerFrame = org.jsfml.system.Time.getSeconds(1f / 40f);           // como mínimo 40 frames por segundo
     }
     
     ////////////////////////
@@ -72,11 +72,12 @@ public class Game {
             
             // para cada uno de los ciclos reinicio el reloj a cero y devuelvo
             // el tiempo que ha transcurrido
-            timeSinceLastUpdate = org.jsfml.system.Time.add(timeSinceLastUpdate, clock.restart());
+            timeSinceLastUpdate = clock.restart();
             
             // si el tiempo transcurrido es mayor que el que queremos por cada frame
             while (timeSinceLastUpdate.compareTo(_timePerFrame) > 0)
             {
+                // le quito la duración de un frame
                 timeSinceLastUpdate = org.jsfml.system.Time.sub(timeSinceLastUpdate, _timePerFrame);
                
                 // Procesamos eventos
@@ -88,6 +89,8 @@ public class Game {
                 // repito el ciclo
             }
             
+            // en cada ciclo actualizo y renderizo
+            update(timeSinceLastUpdate);                 
             render();
         }
     }
