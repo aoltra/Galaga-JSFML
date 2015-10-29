@@ -4,6 +4,7 @@
  */
 package edu.CiclosFormativos.DAM.DI.Galaga;
 
+import edu.CiclosFormativos.DAM.DI.Galaga.Resources.TextureResourcesManager;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.*;
 import org.jsfml.graphics.*;
@@ -51,6 +52,29 @@ public class Game {
         _playerSpeed = 100;           // 25 px/s
         
         _timePerFrame = org.jsfml.system.Time.getSeconds(1f / 40f);           // como mínimo 40 frames por segundo
+    
+        try {
+            
+            TextureResourcesManager textureManager = new TextureResourcesManager();
+            
+            textureManager.load(1, "./assets/nave01.png");
+        
+            Texture t = textureManager.getTexture(1);
+            System.out.println(t.getSize());
+            System.gc();
+            System.out.println(t.getSize());
+            t = null;
+            System.out.println(textureManager.getTexture(1));
+            System.gc();
+            t = textureManager.getTexture(1);  
+            System.out.println("el valor de t es " + textureManager.getTexture(1));
+        
+        } 
+        catch(Exception ex)
+        {
+        
+        }
+    
     }
     
     ////////////////////////
