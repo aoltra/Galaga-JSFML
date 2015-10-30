@@ -28,7 +28,7 @@ public class Game {
     // Variables miembro
     private RenderWindow _window = null;                    // ventana principal
 	
-    private CircleShape _player = null;                     // jugador (un simple círculo cyan)
+    private Sprite _player = null;                     // jugador (un simple círculo cyan)
     private Boolean _IsMovingUp = false, _IsMovingDown = false, _IsMovingLeft = false, _IsMovingRight = false;
     private float _playerSpeed;                             // velocidad del jugad
     
@@ -44,10 +44,9 @@ public class Game {
         _window = new RenderWindow();
         _window.create(new VideoMode(1280, 1024), "Galaga", WindowStyle.DEFAULT, contextSettings);
 
-        _player = new CircleShape ();
-        _player.setRadius(40f);
+        // el jugador pasa ahora a ser un Sprite
+        _player = new Sprite ();
         _player.setPosition(new Vector2f(100f, 100f));
-        _player.setFillColor(Color.CYAN);
         
         _playerSpeed = 100;           // 25 px/s
         
@@ -57,17 +56,10 @@ public class Game {
             
             TextureResourcesManager textureManager = new TextureResourcesManager();
             
-            textureManager.load(1, "./assets/nave01.png");
+            textureManager.load(1, "./assets/nave03.png");
         
-            Texture t = textureManager.getTexture(1);
-            System.out.println(t.getSize());
-            System.gc();
-            System.out.println(t.getSize());
-            t = null;
-            System.out.println(textureManager.getTexture(1));
-            System.gc();
-            t = textureManager.getTexture(1);  
-            System.out.println("el valor de t es " + textureManager.getTexture(1));
+            // le asigno la textura 1
+            _player.setTexture(textureManager.getTexture(1));
         
         } 
         catch(Exception ex)
