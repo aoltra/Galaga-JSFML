@@ -70,4 +70,11 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-jar">
+        <copy todir="${dist.dir}/assets/Textures">
+            <fileset dir="assets/Textures">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>      
+    </target>
 </project>

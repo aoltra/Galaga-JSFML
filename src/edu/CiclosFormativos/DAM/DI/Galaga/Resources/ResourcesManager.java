@@ -10,6 +10,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.function.*;
 import java.nio.file.*;
@@ -46,7 +47,7 @@ public class ResourcesManager {
     {
         if (input == null)
             return;
-
+        
         try {
             
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -58,7 +59,6 @@ public class ResourcesManager {
         }
         catch (IOException | ParserConfigurationException | SAXException ex)
         {
-        
         }
     }
     
@@ -146,25 +146,6 @@ public class ResourcesManager {
         }
         
         return null;
-        
-        
-
-//        
-//        WeakReference wr;
-//        
-//        // compruebo si existe el id
-//        if (_textureMap.containsKey(id))
-//        {
-//            wr = _textureMap.get(id);
-//            
-//            // si existe compruebo si no ha sido eliminado por el GC
-//            if (!wr.isEnqueued()) return wr.get();
-//            
-//            // si ha sido eliminado... elimino la key
-//            _textureMap.remove(id);
-//        }
-//        
-//        return null;
     }
     
    
