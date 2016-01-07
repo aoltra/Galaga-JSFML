@@ -4,7 +4,7 @@
  */
 package edu.CiclosFormativos.DAM.DI.Galaga;
 
-import edu.CiclosFormativos.DAM.DI.Galaga.Resources.ResourcesManager;
+import edu.CiclosFormativos.DAM.DI.Galaga.Resources.*;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.*;
 import org.jsfml.graphics.*;
@@ -55,9 +55,9 @@ public class Game {
         try {
                         
             ResourcesManager resManager = new ResourcesManager("assets/main.resx.xml");
-        
+            resManager.RegisterLoadFunction("texture",SFMLResourcesManager::LoadTexture);
             // le asigno la textura NaveJugador
-            _player.setTexture((Texture)resManager.getID("NaveJugador"));
+            _player.setTexture((Texture)resManager.getID("Naves:NaveJugador"));
             
         } 
         catch(Exception ex)

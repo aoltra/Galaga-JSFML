@@ -7,7 +7,7 @@
         Definición de los recursos principales de Galaga
 -->
 <resx>
-    <section id="naves">
-        <texture id="NaveJugador" src="./assets/textures/nave03.png"/>
+    <section id="Naves">
+        <texture id="NaveJugador" src="./assets/Textures/nave01.png"/>
     </section>
 </resx>

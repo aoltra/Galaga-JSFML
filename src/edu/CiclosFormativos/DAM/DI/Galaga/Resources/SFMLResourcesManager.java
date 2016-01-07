@@ -1,6 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- */
 package edu.CiclosFormativos.DAM.DI.Galaga.Resources;
 
 import java.nio.file.*;
@@ -16,14 +13,14 @@ import org.jsfml.graphics.*;
  * (en C# es posible indicar que la clase es static, en Java no)
  * @author aoltra
  */
-public class SFMLTexturesManager  {
+public class SFMLResourcesManager  {
 
     /***
      * Carga una Texture desde el disco
      * @param element element xml con la información para la carga
      * @return La Texture leida o null si ha habido problemas
      */
-    public static Texture Load(Element element)
+    public static Texture LoadTexture(Element element)
     {
         Texture txt = new Texture();
         

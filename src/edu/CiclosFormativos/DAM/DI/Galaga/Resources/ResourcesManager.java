@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.CiclosFormativos.DAM.DI.Galaga.Resources;
 
 import java.util.Map;
@@ -44,7 +39,7 @@ public class ResourcesManager {
     private Map<String, Function<Element,Object>> _loadFuncMap = new HashMap<>();
 
     /***
-     * 
+     * Constructor
      * @param input URI del fichero XML
      */
     public ResourcesManager(String input) 
@@ -67,11 +62,11 @@ public class ResourcesManager {
         }
     }
     
-     /// <summary>
-        /// Carga recursos desde una nodo raíz del XML.
-        /// </summary>
-        /// <param name="el">Elemento XML a leer</param>
-        /// <param name="section">Seccion en la que se encuentra</param>
+    /***
+     * Carga recursos desde una nodo raíz del XML.
+     * @param nodeList Elemento XML a leer
+     * @param section Sección en la que se encuentra
+     */
     private void Load(NodeList nodeList, String section)
     {
         Element element = null;
@@ -101,54 +96,17 @@ public class ResourcesManager {
                 }
             }
         }
-
-	// make sure it's element node.
-	
-
-//        el.getElements();
-//        // repaso todos los elementos del nodo
-//        for (Element element: el.getChildNodes())
-//        {                
-//            // obtengo el valor del atributo id
-//            String id = element.getAttribute("id");
-//            if (id != null)
-//            {
-//                    // si es una sección sigo leyendo el árbol.. hasta encontrar un recurso
-//                    if (element.Name == "section")
-//                        Load(element, id.Value);
-//                    else
-//                    {
-//                      //  WeakReference wr = new WeakReference(new SFML.Graphics.Texture(filename));
-//                        _resourcesMap.Add(section + id.Value, new Resource(element));
-//                    }
-//                }
-//        }
     }
     
-    
-//    
-//    /***
-//     * Carga una textura desde el sistema de archivos
-//     * @param id Identificador a asignar a la textura cargada
-//     * @param filename Nombre del fichero donde está ubicada la textura 
-//     * @throws java.lang.Exception 
-//     */    
-//    public void load(int id, String filename) throws Exception {
-//            
-//        // Referencia débil. En cuanto la última referencia fuerte al objeto desaparezca, el GC estará
-//        // en disposición de recolectarlo
-//        try {
-//             Texture txt = new Texture();
-//             txt.loadFromFile(Paths.get(filename));
-//             WeakReference<Texture> wr = new WeakReference<>(txt);
-//
-//             _textureMap.put(id, wr);
-//        }
-//        catch (FileSystemNotFoundException | SecurityException | 
-//                IllegalArgumentException | IOException | NullPointerException ex) {
-//            throw new Exception("Excepcion al cargar " +  filename + ". " + ex.getMessage());
-//        }  
-//    }
+    /***
+     * Registra funciones de carga de tipos de recurso par poder ser utilizadas cuando sea necesario cargar un recurso
+     * @param resourceType Nombre del tipo de recurso al que se le asocia la función de carga. Hace las funciones de key
+     * @param f Función de carga
+     */
+    public void RegisterLoadFunction(String resourceType, Function<Element,Object> f)
+    {
+        _loadFuncMap.put(resourceType, f);
+    }
     
     /***
      * Devuelve un recurso en función de su id
