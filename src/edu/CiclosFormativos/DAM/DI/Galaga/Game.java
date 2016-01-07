@@ -4,7 +4,7 @@
  */
 package edu.CiclosFormativos.DAM.DI.Galaga;
 
-import edu.CiclosFormativos.DAM.DI.Galaga.Resources.TextureResourcesManager;
+import edu.CiclosFormativos.DAM.DI.Galaga.Resources.ResourcesManager;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.*;
 import org.jsfml.graphics.*;
@@ -53,14 +53,12 @@ public class Game {
         _timePerFrame = org.jsfml.system.Time.getSeconds(1f / 40f);           // como mínimo 40 frames por segundo
     
         try {
-            
-            TextureResourcesManager textureManager = new TextureResourcesManager();
-            
-            textureManager.load(1, "./assets/nave03.png");
+                        
+            ResourcesManager resManager = new ResourcesManager("assets/main.resx.xml");
         
-            // le asigno la textura 1
-            _player.setTexture(textureManager.getTexture(1));
-        
+            // le asigno la textura NaveJugador
+            _player.setTexture((Texture)resManager.getID("NaveJugador"));
+            
         } 
         catch(Exception ex)
         {
