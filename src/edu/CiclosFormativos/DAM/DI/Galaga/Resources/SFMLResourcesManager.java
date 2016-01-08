@@ -1,5 +1,6 @@
 package edu.CiclosFormativos.DAM.DI.Galaga.Resources;
 
+import edu.CiclosFormativos.DAM.DI.Galaga.Game;
 import java.nio.file.*;
 import java.io.*;
 
@@ -23,11 +24,21 @@ public class SFMLResourcesManager  {
     public static Texture LoadTexture(Element element)
     {
         Texture txt = new Texture();
+        InputStream stream = null;
         
         try {
-            String path = element.getAttribute("src");
-            if (path == null) return null;
-             
+            String path = element.getAttribute("res");
+ 
+            // si no es externo (res), busco el interno (src)
+            if (path.isEmpty())
+            {
+                path = element.getAttribute("src");
+                if (path.isEmpty()) return null;
+                stream = new FileInputStream(path);
+            }
+            else
+                stream = SFMLResourcesManager.class.getResourceAsStream(path);
+            
             // Tamaño
             String rect = element.getAttribute("rectangle");
             if (!rect.isEmpty())
@@ -35,8 +46,9 @@ public class SFMLResourcesManager  {
                 String[] rectCoord;
                 rectCoord = rect.split(",");
                 IntRect area = new IntRect(Integer.parseInt(rectCoord[0]), Integer.parseInt(rectCoord[1]),Integer.parseInt(rectCoord[2]),Integer.parseInt(rectCoord[1])); 
-                txt.loadFromFile(Paths.get(path),area);
-            } else txt.loadFromFile(Paths.get(path));
+                txt.loadFromStream(stream,area);
+            } else
+                txt.loadFromStream(stream);
             
             // Propiedades
             txt.setRepeated(Boolean.parseBoolean(element.getAttribute("repeated")));

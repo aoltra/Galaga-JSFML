@@ -10,10 +10,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.function.*;
-import java.nio.file.*;
 import java.io.*;
 import org.xml.sax.SAXException;
 
@@ -45,7 +43,7 @@ public class ResourcesManager {
      */
     public ResourcesManager(String input) 
     {
-        if (input == null)
+        if (input.isEmpty())
             return;
         
         try {
