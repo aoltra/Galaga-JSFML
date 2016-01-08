@@ -26,7 +26,21 @@ public class SFMLResourcesManager  {
         
         try {
             String path = element.getAttribute("src");
-            txt.loadFromFile(Paths.get(path));
+            if (path == null) return null;
+             
+            // Tamaño
+            String rect = element.getAttribute("rectangle");
+            if (!rect.isEmpty())
+            {
+                String[] rectCoord;
+                rectCoord = rect.split(",");
+                IntRect area = new IntRect(Integer.parseInt(rectCoord[0]), Integer.parseInt(rectCoord[1]),Integer.parseInt(rectCoord[2]),Integer.parseInt(rectCoord[1])); 
+                txt.loadFromFile(Paths.get(path),area);
+            } else txt.loadFromFile(Paths.get(path));
+            
+            // Propiedades
+            txt.setRepeated(Boolean.parseBoolean(element.getAttribute("repeated")));
+            txt.setSmooth(Boolean.parseBoolean(element.getAttribute("smooth")));
         }
         catch (FileSystemNotFoundException | SecurityException | 
                 IllegalArgumentException | IOException | NullPointerException ex) {

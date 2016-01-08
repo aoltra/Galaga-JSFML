@@ -43,7 +43,7 @@ public class Game {
 
         // Creamos la ventana principal
         _window = new RenderWindow();
-        _window.create(new VideoMode(1280, 1024), "Galaga", WindowStyle.DEFAULT, contextSettings);
+        _window.create(new VideoMode(1280, 800), "Galaga", WindowStyle.DEFAULT, contextSettings);
 
         // el jugador pasa ahora a ser un Sprite
         _player = new Sprite ();
@@ -57,6 +57,7 @@ public class Game {
                         
             URL URI = Game.class.getResource("/assets/main.resx.xml");
             ResourcesManager resManager = new ResourcesManager(URI.toString());
+            // referencia a metodo. Sólo Java 8 o superior
             resManager.RegisterLoadFunction("texture",SFMLResourcesManager::LoadTexture);
             // le asigno la textura NaveJugador
             _player.setTexture((Texture)resManager.getID("Naves:NaveJugador"));
